@@ -1,0 +1,12 @@
+{
+  "name": "live-append",
+  "private": "true",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "ioredis": "^4.27.6",
+    "ws": "^7.5.0"
+  }
+}

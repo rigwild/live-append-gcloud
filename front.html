@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      pre {
+        padding: 10px;
+        border: 1px solid #c4c4c4;
+        border-radius: 5px;
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <button id="append">APPEND rand()</button>
+    </div>
+
+    <h2>Appended data</h2>
+    <pre></pre>
+
+    <script type="module">
+      const preEle = document.querySelector('pre')
+      const appendBtnEle = document.querySelector('button#append')
+
+      const ws = new WebSocket(`wss://${location.host}`)
+
+      ws.addEventListener('open', event => ws.send('hi'))
+
+      ws.addEventListener('message', event => {
+        console.log(`[WS] Received ${event.data}`)
+        const [command, value] = event.data.split(';')
+        if (command === 'VALUE') preEle.innerText += `${new Date().toJSON()} - ${value}\n`
+      })
+
+      appendBtnEle.addEventListener('click', () => {
+        const message = `APPEND;${Math.floor(Math.random() * 10000000000)}`
+        ws.send(message)
+        console.log(`[WS] Sent ${message}`)
+      })
+    </script>
+  </body>
+</html>
