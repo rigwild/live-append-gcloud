@@ -29,7 +29,7 @@
       const preEle = document.querySelector('pre')
       const appendBtnEle = document.querySelector('button#append')
 
-      const ws = new WebSocket(`wss://${location.host}`)
+      const ws = new WebSocket(`${location.protocol === 'http:' ? 'ws' : 'wss'}://${location.host}`)
 
       ws.addEventListener('open', event => ws.send('hi'))
 
